@@ -17,6 +17,10 @@ exports.signup = async (req, res, next) => {
 
   const password = req.body.password;
   try {
+    const user_exist = await User.findOne({ email: email });
+    if (user_exist) {
+      return res.json({ message: "Email id already exist!" });
+    }
     const hashedPw = await bcrypt.hash(password, 12);
 
     const user = new User({
@@ -60,14 +64,12 @@ exports.login = async (req, res, next) => {
       "somesupersecretsecretkey",
       { expiresIn: "1h" }
     );
-    res
-      .status(200)
-      .json({
-        token: token,
-        userId: loadedUser._id.toString(),
-        name: loadedUser.name,
-        email: loadedUser.email,
-      });
+    res.status(200).json({
+      token: token,
+      userId: loadedUser._id.toString(),
+      name: loadedUser.name,
+      email: loadedUser.email,
+    });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
