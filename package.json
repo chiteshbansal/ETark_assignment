@@ -8,5 +8,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.9",
     "uuid": "^8.3.2"
+  },
+  "scripts": {
+    "start": "node app.js"
   }
 }
