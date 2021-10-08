@@ -26,7 +26,7 @@ app.use("/", authRoutes);
 
 app.use((error, req, res, next) => {
   console.log("error is ", error);
-  return res.json({ message: "Error found", error: error });
+  return res.json({ message: error.message, error: error });
 });
 mongoose
   .connect(
